@@ -64,17 +64,15 @@ class UserController(
     private val apiKey: String? = null
 
     @GetMapping("/games")
-    fun getGames(): List<GameResponse> {
+    fun getGames(@RequestParam page: String, @RequestParam(name = "page_size") pageSize: String): GameResponse {
         val format = Json {
             coerceInputValues = true
             ignoreUnknownKeys = true
         }
         val url =
-            "https://api.rawg.io/api/games?key=$apiKey&page=1&page_size=10&exclude_additions=true&exclude_parents=true&exclude_game_series=true"
+            "https://api.rawg.io/api/games?key=$apiKey&page=$page&page_size=$pageSize"
         val restTemplate = RestTemplate()
         val result: String? = restTemplate.getForObject(url, String::class.java)
-        var games = format.decodeFromString<GameResponse>(result!!)
-        println(games)
-        return listOf()
+        return format.decodeFromString(result!!)
     }
 }

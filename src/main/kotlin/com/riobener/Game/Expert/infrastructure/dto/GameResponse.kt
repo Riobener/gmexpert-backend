@@ -12,9 +12,7 @@ data class GameResponse(
 @Serializable
 data class Game(
     val id: Int,
-    val slug: String,
     val name: String,
-    val tba: Boolean,
     val background_image: String,
     val rating: Double
 )
