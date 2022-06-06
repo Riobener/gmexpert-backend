@@ -4,9 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GameResponse(
-    val count: Int,
-    val next: String,
-    val previous: String? = null,
     val results: List<Game>
 )
 @Serializable

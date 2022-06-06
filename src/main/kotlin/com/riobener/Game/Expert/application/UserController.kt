@@ -59,20 +59,4 @@ class UserController(
         val jwt: String = jwtTokenUtil.generateToken(userDetails)
         return ResponseEntity.ok<Any>(AuthenticationResponse(jwt))
     }
-
-    @Value("\${apiKey}")
-    private val apiKey: String? = null
-
-    @GetMapping("/games")
-    fun getGames(@RequestParam page: String, @RequestParam(name = "page_size") pageSize: String): GameResponse {
-        val format = Json {
-            coerceInputValues = true
-            ignoreUnknownKeys = true
-        }
-        val url =
-            "https://api.rawg.io/api/games?key=$apiKey&page=$page&page_size=$pageSize"
-        val restTemplate = RestTemplate()
-        val result: String? = restTemplate.getForObject(url, String::class.java)
-        return format.decodeFromString(result!!)
-    }
 }
