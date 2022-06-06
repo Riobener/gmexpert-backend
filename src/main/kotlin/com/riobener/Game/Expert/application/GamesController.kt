@@ -1,5 +1,6 @@
 package com.riobener.Game.Expert.application
 
+import com.riobener.Game.Expert.infrastructure.dto.GameDetailsResponse
 import com.riobener.Game.Expert.infrastructure.dto.GameResponse
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -27,5 +28,24 @@ class GamesController(
         val restTemplate = RestTemplate()
         val result: String? = restTemplate.getForObject(url, String::class.java)
         return format.decodeFromString(result!!)
+    }
+
+    @GetMapping("/games/details")
+    fun getGameDetails(@RequestParam gameId: String): GameDetailsResponse {
+        val format = Json {
+            coerceInputValues = true
+            ignoreUnknownKeys = true
+        }
+        val urlDetails =
+            "https://api.rawg.io/api/games/${gameId}?key=$apiKey"
+        val urlScreenshots =
+            "https://api.rawg.io/api/games/$gameId/screenshots?key=$apiKey"
+        val restTemplate = RestTemplate()
+        val details: String? = restTemplate.getForObject(urlDetails, String::class.java)
+        val screenshots: String? = restTemplate.getForObject(urlScreenshots, String::class.java)
+        return GameDetailsResponse(
+            details = format.decodeFromString(details!!),
+            images = format.decodeFromString(screenshots!!)
+        )
     }
 }
