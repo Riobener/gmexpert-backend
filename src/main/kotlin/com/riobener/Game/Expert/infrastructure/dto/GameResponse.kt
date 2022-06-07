@@ -22,7 +22,8 @@ data class GameDetails(
     val description: String,
     val released: String,
     val background_image: String,
-    val rating: Double
+    val rating: Double,
+    val metacritic: Int
 )
 
 @Serializable
