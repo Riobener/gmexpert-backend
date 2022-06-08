@@ -88,7 +88,14 @@ class GamesController(
         return ResponseEntity.ok(result)
     }
 
-    @GetMapping("/games/favorite/all", "application/json")
+    @DeleteMapping("/games/favorite", "application/json")
+    fun deleteFromFavorite(@RequestParam gameId: String): ResponseEntity<*>? {
+        val principal = SecurityContextHolder.getContext().authentication.principal as JpaUser
+        val result = favoriteService.deleteFromFavorite(gameId,principal.id.toString())
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/games/favorite", "application/json")
     fun getAllFavorites(): ResponseEntity<*>? {
         val principal = SecurityContextHolder.getContext().authentication.principal as JpaUser
         val result = favoriteService.findUserFavorites(principal.id.toString())

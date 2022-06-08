@@ -14,6 +14,7 @@ import java.util.*
 interface FavoriteJpaRepository : JpaRepository<JpaFavorite, UUID> {
     fun findAllByUserId(userId: String): List<JpaFavorite>?
     fun findByGameIdAndUserId(gameId: String, userId: String): JpaFavorite?
+    fun deleteByGameIdAndUserId(gameId: String,userId: String): JpaFavorite
 }
 
 @Component
@@ -32,5 +33,9 @@ class FavoriteRepositoryImpl(
 
     override fun getGameInFavorites(gameId: String, userId: String): JpaFavorite? {
         return favoriteJpaRepository.findByGameIdAndUserId(gameId,userId)
+    }
+
+    override fun deleteFavorite(gameId: String, userId: String): JpaFavorite {
+        return favoriteJpaRepository.deleteByGameIdAndUserId(gameId,userId)
     }
 }

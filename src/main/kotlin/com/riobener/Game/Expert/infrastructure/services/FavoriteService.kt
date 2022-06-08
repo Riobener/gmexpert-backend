@@ -34,4 +34,8 @@ class FavoriteService(
         return favoriteRepository.getGameInFavorites(gameId,userId)!=null
     }
 
+    fun deleteFromFavorite(gameId: String, userId: String): JpaFavorite {
+        return favoriteRepository.deleteFavorite(gameId,userId )
+    }
+
 }
