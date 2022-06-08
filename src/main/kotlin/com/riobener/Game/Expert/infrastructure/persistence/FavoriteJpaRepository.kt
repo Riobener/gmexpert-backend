@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Repository
 interface FavoriteJpaRepository : JpaRepository<JpaFavorite, UUID> {
     fun findAllByUserId(userId: String): List<JpaFavorite>?
     fun findByGameIdAndUserId(gameId: String, userId: String): JpaFavorite?
-    fun deleteByGameIdAndUserId(gameId: String,userId: String): JpaFavorite
+    fun deleteByGameIdAndUserId(gameId: String,userId: String): Int
 }
 
 @Component
@@ -35,7 +36,8 @@ class FavoriteRepositoryImpl(
         return favoriteJpaRepository.findByGameIdAndUserId(gameId,userId)
     }
 
-    override fun deleteFavorite(gameId: String, userId: String): JpaFavorite {
+    @Transactional
+    override fun deleteFavorite(gameId: String, userId: String): Int {
         return favoriteJpaRepository.deleteByGameIdAndUserId(gameId,userId)
     }
 }
