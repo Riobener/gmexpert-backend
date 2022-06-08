@@ -13,6 +13,7 @@ import java.util.*
 @Repository
 interface FavoriteJpaRepository : JpaRepository<JpaFavorite, UUID> {
     fun findAllByUserId(userId: String): List<JpaFavorite>?
+    fun findByGameIdAndUserId(gameId: String, userId: String): JpaFavorite?
 }
 
 @Component
@@ -27,5 +28,9 @@ class FavoriteRepositoryImpl(
 
     override fun findUserFavorites(userId: String): List<JpaFavorite>? {
         return favoriteJpaRepository.findAllByUserId(userId)
+    }
+
+    override fun getGameInFavorites(gameId: String, userId: String): JpaFavorite? {
+        return favoriteJpaRepository.findByGameIdAndUserId(gameId,userId)
     }
 }

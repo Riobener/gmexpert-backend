@@ -42,4 +42,5 @@ data class Screenshot(
 data class GameDetailsResponse(
     val details: GameDetails,
     val images: GameScreenshots,
+    val inFavorite: Boolean
 )

@@ -60,6 +60,7 @@ class GamesController(
 
     @GetMapping("/games/details")
     fun getGameDetails(@RequestParam gameId: String): GameDetailsResponse {
+        val principal = SecurityContextHolder.getContext().authentication.principal as JpaUser
         val format = Json {
             coerceInputValues = true
             ignoreUnknownKeys = true
@@ -71,9 +72,11 @@ class GamesController(
         val restTemplate = RestTemplate()
         val details: String? = restTemplate.getForObject(urlDetails, String::class.java)
         val screenshots: String? = restTemplate.getForObject(urlScreenshots, String::class.java)
+        val inFavorite = favoriteService.isGameInFavorite(gameId,principal.id.toString())
         return GameDetailsResponse(
             details = format.decodeFromString(details!!),
-            images = format.decodeFromString(screenshots!!)
+            images = format.decodeFromString(screenshots!!),
+            inFavorite = inFavorite
         )
     }
 

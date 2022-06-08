@@ -30,4 +30,8 @@ class FavoriteService(
         }
     }
 
+    fun isGameInFavorite(gameId: String, userId: String): Boolean{
+        return favoriteRepository.getGameInFavorites(gameId,userId)!=null
+    }
+
 }
