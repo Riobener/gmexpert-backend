@@ -30,6 +30,19 @@ class GamesController(
         return format.decodeFromString(result!!)
     }
 
+    @GetMapping("/games/search")
+    fun getGamesBySearch(@RequestParam(name = "query") query: String, @RequestParam(name = "page_size") pageSize: String): GameResponse {
+        val format = Json {
+            coerceInputValues = true
+            ignoreUnknownKeys = true
+        }
+        val url =
+            "https://api.rawg.io/api/games?key=$apiKey&search=$query&page_size=$pageSize"
+        val restTemplate = RestTemplate()
+        val result: String? = restTemplate.getForObject(url, String::class.java)
+        return format.decodeFromString(result!!)
+    }
+
     @GetMapping("/games/details")
     fun getGameDetails(@RequestParam gameId: String): GameDetailsResponse {
         val format = Json {

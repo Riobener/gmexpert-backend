@@ -11,7 +11,7 @@ data class GameResponse(
 data class Game(
     val id: Int,
     val name: String,
-    val background_image: String,
+    val background_image: String? = null,
     val rating: Double
 )
 
@@ -21,11 +21,11 @@ data class GameDetails(
     val name: String,
     val description: String,
     val released: String,
-    val background_image: String,
+    val background_image: String? = null,
     val rating: Double,
-    val metacritic: Int,
-    val website: String,
-    val metacritic_url: String
+    val metacritic: Int? = null,
+    val website: String? = null,
+    val metacritic_url: String? = null,
 )
 
 @Serializable

@@ -40,6 +40,7 @@ class WebSecurityConfig(
             .antMatchers("/api/user/auth").permitAll()
             .antMatchers("/api/user/register").permitAll()
             .antMatchers("/api/games").permitAll()
+            .antMatchers("/api/games/search").permitAll()
             .antMatchers("/api/games/details").permitAll()
             .anyRequest().authenticated()
             .and()
