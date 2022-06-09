@@ -32,7 +32,7 @@ class UserController(
 ) {
     @GetMapping("/hello")
     fun helloUser(): ResponseEntity<*>? {
-        return ResponseEntity.ok().body(SimpleResponse("Welcome to games service Api!"))
+        return ResponseEntity.ok().body(SimpleResponse("Welcome!"))
     }
 
     @PostMapping("/user/register", "application/json")
